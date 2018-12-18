@@ -17,32 +17,14 @@ public class Matrix {
                 matrixA[i][j] = scan.nextInt();
             }
         }
+        //constant
+        int consT = scan.nextInt();
 
-        int rowB = scan.nextInt();
-        int colB = scan.nextInt();
-
-        //matrixB
-        int[][] matrixB = new int[rowB][colB];
-
-        //loop for adding elements to Matrix B from IO Stream.
-        for (int i = 0; i < matrixB.length; i++) {
-            for (int j = 0; j < matrixB[i].length; j++) {
-                matrixB[i][j] = scan.nextInt();
-            }
-        }
-
-        int sumOfMatrices = 0;
-        if (rowA != rowB || colA != colB) {
-            System.out.println("ERROR");
-        } else {
-            for (int i = 0; i < matrixA.length; i++) {
-                System.out.println();
-                for (int j = 0; j < matrixA[i].length; j++) {
-                    sumOfMatrices += matrixA[i][j];
-                    sumOfMatrices += matrixB[i][j];
-                    System.out.print(sumOfMatrices + " ");
-                    sumOfMatrices = 0;
-                }
+        //loop for constant multiplication of Matrix
+        for (int i = 0; i < matrixA.length; i++) {
+            System.out.println();
+            for (int j = 0; j < matrixA[i].length; j++) {
+                System.out.print((matrixA[i][j] * consT) + " ");
             }
         }
     }
