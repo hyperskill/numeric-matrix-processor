@@ -1,5 +1,6 @@
 package matrix;
 
+import java.math.BigInteger;
 import java.util.*;
 
 
@@ -14,6 +15,7 @@ class Matrix {
         System.out.println("2. Multiply matrix to a constant");
         System.out.println("3. Multiply matrices");
         System.out.println("4. Transpose matrix");
+        System.out.println("5. Calculate a determinant");
         System.out.println("0. Exit");
         System.out.print("Your choice: ");
         int choice = scan.nextInt();
@@ -29,6 +31,9 @@ class Matrix {
                 break;
             case 4:
                 MatrixTransposeMenu();
+                break;
+            case 5:
+                determinantInputMatrix();
                 break;
             case 0:
                 System.exit(0);
@@ -293,5 +298,77 @@ class Matrix {
                 System.out.print(transposeHorisontal[i][j] + " ");
             }
         }
+    }
+    //Method for calculation of determinant of Matrix.
+    public static BigInteger determinant(final int[][] matr) {
+
+        int n = matr.length;
+        BigInteger[][] a = new BigInteger[n][n];
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0;j  < n; ++j) {
+                a[i][j] = BigInteger.valueOf(matr[i][j]);
+            }
+        }
+
+        BigInteger prime = BigInteger.probablePrime(n + 4, new Random());
+
+        BigInteger det = BigInteger.ONE;
+
+        for (int row = 0; row < n; ++row) {
+            int currentRow = row;
+            while (currentRow < n && a[currentRow][row].equals(BigInteger.ZERO)) {
+                ++currentRow;
+            }
+            if (currentRow == n) {
+                return BigInteger.ZERO;
+            }
+
+            if (currentRow != row) {
+                det = det.negate();
+                BigInteger[] tmp = a[currentRow];
+                a[currentRow] = a[row];
+                a[row] = tmp;
+            }
+
+            BigInteger inverse = a[row][row].modInverse(prime);
+
+            for (currentRow = row + 1; currentRow < n; ++currentRow) {
+                if (a[currentRow][row].equals(BigInteger.ZERO)) {
+                    continue;
+                }
+                BigInteger coefficient = a[currentRow][row].multiply(inverse).remainder(prime);
+                for (int column = row; column < n; ++column) {
+                    a[currentRow][column] = a[currentRow][column].subtract(a[row][column].multiply(coefficient).remainder(prime)).remainder(prime);
+                }
+            }
+
+        }
+
+        for (int i = 0; i < n; ++i) {
+            det = det.multiply(a[i][i]).remainder(prime);
+        }
+        det = det.add(prime);
+        det = det.remainder(prime);
+        if (det.multiply(BigInteger.valueOf(2)).compareTo(prime) > 0) {
+            det = prime.subtract(det).remainder(prime);
+        }
+        return det;
+    }
+
+    public static void determinantInputMatrix(){
+        System.out.print("Enter size of matrix: ");
+        //rows and cols of matrix
+        int row = scan.nextInt();
+        int col = scan.nextInt();
+        //Matrix A
+        int[][] matrix = new int[row][col];
+        //loop for adding elements to matrix
+        System.out.println("Enter matrix: ");
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                matrix[i][j] = scan.nextInt();
+            }
+        }
+        System.out.println(determinant(matrix));
     }
 }
