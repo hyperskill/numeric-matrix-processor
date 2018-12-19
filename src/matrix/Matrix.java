@@ -13,6 +13,7 @@ class Matrix {
         System.out.println("1. Add matrices.");
         System.out.println("2. Multiply matrix to a constant");
         System.out.println("3. Multiply matrices");
+        System.out.println("4. Transpose matrix");
         System.out.println("0. Exit");
         System.out.print("Your choice: ");
         int choice = scan.nextInt();
@@ -25,6 +26,9 @@ class Matrix {
                 break;
             case 3:
                 MatrixMultiplication();
+                break;
+            case 4:
+                MatrixTransposeMenu();
                 break;
             case 0:
                 System.exit(0);
@@ -131,15 +135,15 @@ class Matrix {
                 matrixB[i][j] = scan.nextInt();
             }
         }
-        int[][] multiply =new int[colA][rowB];
+        int[][] multiply = new int[colA][rowB];
         int sum = 0;
         if (colA == rowB) {
             //loop for multiplication of matrices
             for (int i = 0; i < rowA; i++) {
                 System.out.println();
                 for (int j = 0; j < colB; j++) {
-                    for (int z = 0; z < rowB; z++){
-                       sum +=  matrixA[i][z] * matrixB[z][j];
+                    for (int z = 0; z < rowB; z++) {
+                        sum += matrixA[i][z] * matrixB[z][j];
                     }
                     multiply[i][j] = sum;
                     sum = 0;
@@ -149,12 +153,145 @@ class Matrix {
             System.out.println("ERROR");
         }
         System.out.println("Result of Matrices multiplication are: ");
-        for (int i = 0; i < multiply.length; i++){
+        for (int i = 0; i < multiply.length; i++) {
             System.out.println();
-            for(int j = 0; j < multiply[i].length; j++){
+            for (int j = 0; j < multiply[i].length; j++) {
                 System.out.print(multiply[i][j] + " ");
             }
         }
     }
 
+    protected static void MatrixTransposeMenu() {
+        System.out.println("1. Main diagonal");
+        System.out.println("2. Side diagonal");
+        System.out.println("3. Vertical line");
+        System.out.println("4. Horizontal line");
+        System.out.print("Your chouce: ");
+        int choice = scan.nextInt();
+        switch (choice) {
+            case 1:
+                MatrixTransposeMain();
+                break;
+            case 2:
+                MatrixTransposeSide();
+                break;
+            case 3:
+                MatrixTransposeVertical();
+                break;
+            case 4:
+                MatrixTransposeHorizontal();
+                break;
+        }
+    }
+
+    protected static void MatrixTransposeMain() {
+        System.out.print("Enter size of matrix: ");
+        //rows and cols of matrix
+        int row = scan.nextInt();
+        int col = scan.nextInt();
+        //Matrix A
+        int[][] matrix = new int[row][col];
+        //loop for adding elements to matrix A
+        System.out.println("Enter matrix: ");
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                matrix[i][j] = scan.nextInt();
+            }
+        }
+        int[][] transposedMatrix = new int[col][row];
+        //loop for transposing Matrix by Main diagonal
+        for(int i =0; i < matrix.length; i++){
+            System.out.println();
+            for(int j = 0; j < matrix[i].length; j++){
+                transposedMatrix[j][i] = matrix[i][j];
+            }
+        }
+        for(int i =0; i < matrix.length; i++){
+            System.out.println();
+            for(int j = 0; j < matrix[i].length; j++){
+                System.out.print(transposedMatrix[i][j] + " ");
+            }
+        }
+    }
+
+    //write this method !!!!!
+    protected static void MatrixTransposeSide() {
+        System.out.print("Enter size of matrix: ");
+        //rows and cols of matrix
+        int row = scan.nextInt();
+        int col = scan.nextInt();
+        //Matrix A
+        int[][] matrix = new int[row][col];
+        //loop for adding elements to matrix A
+        System.out.println("Enter matrix: ");
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                matrix[i][j] = scan.nextInt();
+            }
+        }
+        int[][] transposeSide = new int[row][col];
+        //loop for transposing Matrix by Side diagonal
+        for (int i = 0; i < matrix.length; i++){
+            for (int j = 0; j < matrix.length; j++){
+            }
+        }
+    }
+
+    protected static void MatrixTransposeVertical() {
+        System.out.print("Enter size of matrix: ");
+        //rows and cols of matrix
+        int row = scan.nextInt();
+        int col = scan.nextInt();
+        //Matrix A
+        Integer[][] matrix = new Integer[row][col];
+        //loop for adding elements to matrix A
+        System.out.println("Enter matrix: ");
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                matrix[i][j] = scan.nextInt();
+            }
+        }
+        //loop for transposing Matrix by  Vertical
+        for(int i = 0; i < matrix.length; i++){
+            Arrays.sort(matrix[i], Collections.reverseOrder());
+        }
+        for (int i = 0; i < matrix.length; i++) {
+            System.out.println();
+            for (int j = 0; j < matrix[i].length; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+        }
+
+    }
+
+    protected static void MatrixTransposeHorizontal() {
+        System.out.print("Enter size of matrix: ");
+        //rows and cols of matrix
+        int row = scan.nextInt();
+        int col = scan.nextInt();
+        //Matrix A
+        int[][] matrix = new int[row][col];
+        //loop for adding elements to matrix A
+        System.out.println("Enter matrix: ");
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                matrix[i][j] = scan.nextInt();
+            }
+        }
+        int[][] transposeHorisontal = new int[row][];
+        //loop for transposing Matrix by  Horizontal
+        int counter = 1;
+        for(int i = 0; i < matrix.length; i++){
+            transposeHorisontal[matrix.length - counter] = matrix[i];
+            if (counter < matrix.length) {
+                counter++;
+            }
+        }
+        for (int i = 0; i < transposeHorisontal.length; i++) {
+            System.out.println();
+            for (int j = 0; j < transposeHorisontal[i].length; j++) {
+                System.out.print(transposeHorisontal[i][j] + " ");
+            }
+        }
+    }
 }
